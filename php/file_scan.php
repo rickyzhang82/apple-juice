@@ -37,7 +37,7 @@ function generateHTMLTableFromFileSystem($root_dir, $file_extension='mp4')
    
    //Show link to parent directory
    echo "<tr>\n";
-   echo "<td> <a href='index.html?root_dir="."$root_dir"."'>Parent Directory</A> </td>\n";
+   echo "<td> <a href='index.html?root_dir=".dirname($root_dir)."'>Parent Directory</A> </td>\n";
    echo "</tr>\n";
  
    if (is_dir($root_dir))
