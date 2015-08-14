@@ -1,0 +1,11 @@
+ <!DOCTYPE html>
+<html>
+<body>
+<?php
+   require("../php/file_scan.php");
+   $ini_array = pare_ini_file("../conf/apple-juice.conf");
+   generateHTMLTableFromFileSystem(ini_array["media_dir"],"mp4");
+?>
+</body>
+</html>
+
