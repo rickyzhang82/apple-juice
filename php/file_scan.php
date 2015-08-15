@@ -33,15 +33,15 @@ function generateHTMLTableFromFileSystem($relative_path, $www_root,$file_extensi
 
    echo "<table>\n";
 
-   echo "<tr><th valign="top"><img src="/icons/blank.gif" alt="[ICO]"></th><th> Name </th> <tr>\n";
+   echo "<tr><th valign=\"top\"><img src=\"/icons/blank.gif\" alt=\"[ICO]\"></th><th> Name </th> <tr>\n";
    
    //Show link to parent directory
    echo "<tr>\n";
-   echo "<td valign="top"><img src="/icons/back.gif" alt="[PARENTDIR]"></td>\n";
+   echo "<td valign=\"top\"><img src=\"/icons/back.gif\" alt=\"[PARENTDIR]\"></td>\n";
    echo "<td> <a href='index.html?relative_path=".dirname($relative_path)."'>Parent Directory</A> </td>\n";
    echo "</tr>\n";
 
-   echo "<tr><th colspan="5"><hr></th></tr>\n";
+   echo "<tr><th colspan=\"5\"><hr></th></tr>\n";
 
    if (is_dir("$www_root/$relative_path"))
    {
@@ -53,7 +53,7 @@ function generateHTMLTableFromFileSystem($relative_path, $www_root,$file_extensi
             {
                //Show link to another directory
                echo "<tr>\n";
-               echo "<td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td>\n";
+               echo "<td valign=\"top\"><img src=\"/icons/folder.gif\" alt=\"[DIR]\"></td>\n";
                echo "<td> <a href='index.html?relative_path="."$relative_path/$f"."'>$f</A> </td>\n";
                echo "</tr>\n";
             }
@@ -63,7 +63,7 @@ function generateHTMLTableFromFileSystem($relative_path, $www_root,$file_extensi
 
                   //show player
                   echo "<tr>\n";
-                  echo "<td valign="top"><img src="/movie/folder.gif" alt="[DIR]"></td>\n";
+                  echo "<td valign=\"top\"><img src=\"/movie/folder.gif\" alt=\"[DIR]\"></td>\n";
                   echo "<td> <a href='player.html?file="."$relative_path/$f"."'>$f</A> </td>\n";
                   echo "</tr>\n";
                }
@@ -72,7 +72,7 @@ function generateHTMLTableFromFileSystem($relative_path, $www_root,$file_extensi
       }
    }
    
-   echo "<tr><th colspan="5"><hr></th></tr>\n";
+   echo "<tr><th colspan=\"5\"><hr></th></tr>\n";
    
    echo "</table>\n";
 
