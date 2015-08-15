@@ -3,23 +3,23 @@
 /*
  * Given root path and filter, return multi-dimension array that store files and sub-directories
  */
-function getFilteredFiles($root_dir, $file_extension='mp4') 
+function getFilteredFiles($relative_path, $file_extension='mp4') 
 {
-   $root_dir = rtrim($root_dir, '\\/');
+   $relative_path = rtrim($relative_path, '\\/');
    $result = array();
     
-   foreach (scandir($root_dir) as $f) 
+   foreach (scandir($relative_path) as $f) 
    {
       if ($f !== '.' and $f !== '..') 
       {
-         if (is_dir("$root_dir/$f")) 
+         if (is_dir("$relative_path/$f")) 
          {
-               $result = array_merge($result, array("$root_dir/$f" => getFilteredFiles("$root_dir/$f", $file_extension)));
+               $result = array_merge($result, array("$relative_path/$f" => getFilteredFiles("$relative_path/$f", $file_extension)));
          }
          else 
          {
             if (strcasecmp($file_extension, substr($f,-3)) == 0)
-               $result[] = "$root_dir/$f";
+               $result[] = "$relative_path/$f";
          }
       }
    }
@@ -27,9 +27,9 @@ function getFilteredFiles($root_dir, $file_extension='mp4')
    return $result;
 }
 
-function generateHTMLTableFromFileSystem($root_dir, $file_extension='mp4')
+function generateHTMLTableFromFileSystem($relative_path, $www_root,$file_extension='mp4')
 {
-   $root_dir = rtrim($root_dir, '\\/');
+   $relative_path = rtrim($relative_path, '\\/');
 
    echo "<table>\n";
 
@@ -37,20 +37,20 @@ function generateHTMLTableFromFileSystem($root_dir, $file_extension='mp4')
    
    //Show link to parent directory
    echo "<tr>\n";
-   echo "<td> <a href='index.html?root_dir=".dirname($root_dir)."'>Parent Directory</A> </td>\n";
+   echo "<td> <a href='index.html?relative_path=".dirname($relative_path)."'>Parent Directory</A> </td>\n";
    echo "</tr>\n";
  
-   if (is_dir($root_dir))
+   if (is_dir("$www_root/$relative_path"))
    {
-      foreach (scandir($root_dir) as $f) 
+      foreach (scandir("$www_root/$relative_path") as $f) 
       {
          if ($f !== '.' and $f !== '..') 
          {
-            if (is_dir("$root_dir/$f")) 
+            if (is_dir("$www_root/$relative_path/$f")) 
             {
                //Show link to another directory
                echo "<tr>\n";
-               echo "<td> <a href='index.html?root_dir="."$root_dir/$f"."'>$f</A> </td>\n";
+               echo "<td> <a href='index.html?relative_path="."$relative_path/$f"."'>$f</A> </td>\n";
                echo "</tr>\n";
             }
             else 
@@ -59,7 +59,7 @@ function generateHTMLTableFromFileSystem($root_dir, $file_extension='mp4')
 
                   //show player
                   echo "<tr>\n";
-                  echo "<td> <a href='player.html?file="."$root_dir/$f"."'>$f</A> </td>\n";
+                  echo "<td> <a href='player.html?file="."$relative_path/$f"."'>$f</A> </td>\n";
                   echo "</tr>\n";
                }
             }

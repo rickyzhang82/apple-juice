@@ -5,17 +5,17 @@
    define("WWW_ROOT",__DIR__);
    require(WWW_ROOT."/php/file_scan.php");
 
-   if($_GET["root_dir"])
+   if($_GET["relative_path"])
    {
-      $query_path = $_GET["root_dir"];
+      $query_path = $_GET["relative_path"];
    }
    else
    {
       $ini_array = parse_ini_file(WWW_ROOT."/conf/apple-juice.conf");
-      $query_path = WWW_ROOT.$ini_array["media_dir"];
+      $query_path = $ini_array["media_dir"];
    }
 
-   generateHTMLTableFromFileSystem($query_path,"mp4");
+   generateHTMLTableFromFileSystem($query_path,WWW_ROOT,"mp4");
 ?>
 </body>
 </html>
