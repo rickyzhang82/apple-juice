@@ -1,22 +1,29 @@
  <!DOCTYPE html>
 <html>
-<body>
-<?php
-   define("WWW_ROOT",__DIR__);
-   require(WWW_ROOT."/php/file_scan.php");
+   <body>
 
-   if($_GET["relative_path"])
-   {
-      $query_path = $_GET["relative_path"];
-   }
-   else
-   {
-      $ini_array = parse_ini_file(WWW_ROOT."/conf/apple-juice.conf");
-      $query_path = $ini_array["media_dir"];
-   }
+   <?php
+      define("WWW_ROOT",__DIR__);
+      require(WWW_ROOT."/php/file_scan.php");
 
-   generateHTMLTableFromFileSystem($query_path,WWW_ROOT,"mp4");
-?>
-</body>
+      if($_GET["relative_path"])
+      {
+         $query_path = $_GET["relative_path"];
+      }
+      else
+      {
+         $ini_array = parse_ini_file(WWW_ROOT."/conf/apple-juice.conf");
+         $query_path = $ini_array["media_dir"];
+      }
+
+      echo "<h1>Index of $query_path</h1>\n";
+      
+      generateHTMLTableFromFileSystem($query_path,WWW_ROOT,"mp4");
+
+      echo "<address> Powered by PHP ".phpversion()." </address>\n";
+
+   ?>
+
+   </body>
 </html>
 
