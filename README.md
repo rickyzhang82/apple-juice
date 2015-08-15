@@ -34,4 +34,5 @@ I bought a Sony DV, which produces a gazillion number of MP4 video clips. I want
 * [Aug 14, 2015] After spending 3 hours to learn php and 2 hours coding, it provides basic functions which includes: scan video library and video airplay streaming from web browser
 
 ## What is Next?
+* Add cookie to store last video play position (if possible)
 * Deploy this php in docker container.
