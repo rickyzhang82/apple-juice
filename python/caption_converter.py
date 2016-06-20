@@ -25,10 +25,10 @@ def main():
     (options, args) = parser.parse_args()
 
     if os.path.isdir(args[0]):
-        directory = args[0]
+        directory = text(args[0])
         recursive_convert(directory)
     else:
-        filename = args[0]
+        filename = text(args[0])
         convert_srt_file(filename, options.output_filename)
 
 
