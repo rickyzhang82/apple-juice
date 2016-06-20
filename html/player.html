@@ -9,11 +9,13 @@
 
    if($_GET["file"]){
       $file_path = "/".$_GET["file"];
-      echo "<source src=\"$file_path\" type=\"video/mp4\">";
+      $subtitle_path = str_replace(".mp4",".vtt", $file_path);
+      echo "   <source src=\"$file_path\" type=\"video/mp4\">\n";
+      echo "   <track src=\"$subtitle_path\" kind=\"subtitles\" srclang=\"en\" label=\"English\">\n";
    }
  
 ?>
- </video>
+</video>
 
 </body>
 </html>
