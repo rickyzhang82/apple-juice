@@ -51,7 +51,7 @@ def convert_srt_file(input_filename, output_filename=None):
 
 def read_captions(input_filename):
 
-    byte_chunk = min(32, os.path.getsize(input_filename))
+    byte_chunk = os.path.getsize(input_filename)
     raw = open(input_filename, 'rb').read(byte_chunk)
 
     if raw.startswith(codecs.BOM_UTF8):
