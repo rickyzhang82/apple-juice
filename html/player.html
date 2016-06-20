@@ -1,22 +1,39 @@
  <!DOCTYPE html>
 <html>
-<body>
-<video width="320" height="240" controls preload="none" x-webkit-airplay="allow" >
+ <head>
+     <script>
+    function speed(x){
+        var myVid=document.getElementById("my_video");
+	    myVid.playbackRate=x;
+	    $('#pbrate').html(x);
+    }
+    </script>
+ </head>
+
+ <body>
+    <a href="javascript:speed(0.5)">.5x</a>
+	<a href="javascript:speed(1.0)">1x</a>
+	<a href="javascript:speed(1.25)">1.25x</a>
+    <a href="javascript:speed(1.5)">1.5x</a>
+    <a href="javascript:speed(1.75)">1.75x</a>
+    <a href="javascript:speed(2.0)">2x</a>
+
+    <video id="my_video" width="320" height="240" controls preload="none" x-webkit-airplay="allow" >
  
-<?php
-  define("WWW_ROOT",__DIR__);
+    <?php
+    define("WWW_ROOT",__DIR__);
 
 
-   if($_GET["file"]){
-      $file_path = "/".$_GET["file"];
-      $subtitle_path = str_replace(".mp4",".vtt", $file_path);
-      echo "   <source src=\"$file_path\" type=\"video/mp4\">\n";
-      echo "   <track src=\"$subtitle_path\" kind=\"subtitles\" srclang=\"en\" label=\"English\">\n";
-   }
+    if($_GET["file"]){
+        $file_path = "/".$_GET["file"];
+        $subtitle_path = str_replace(".mp4",".vtt", $file_path);
+        echo "   <source src=\"$file_path\" type=\"video/mp4\">\n";
+        echo "   <track src=\"$subtitle_path\" kind=\"subtitles\" srclang=\"en\" label=\"English\">\n";
+    }
  
-?>
-</video>
+    ?>
+    </video>
 
-</body>
+ </body>
 </html>
 
