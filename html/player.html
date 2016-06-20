@@ -5,7 +5,7 @@
     function speed(x){
         var myVid=document.getElementById("my_video");
 	    myVid.playbackRate=x;
-	    $('#pbrate').html(x);
+	    document.getElementById("play_rate").innerHTML = "<b>Playing at " + x + "x</b>";
     }
     </script>
  </head>
@@ -17,7 +17,8 @@
     <a href="javascript:speed(1.5)">1.5x</a>
     <a href="javascript:speed(1.75)">1.75x</a>
     <a href="javascript:speed(2.0)">2x</a>
-
+    <p id="play_rate"><b>Playing at 1x</b></p>
+    <P>
     <video id="my_video" width="320" height="240" controls preload="none" x-webkit-airplay="allow" >
  
     <?php
