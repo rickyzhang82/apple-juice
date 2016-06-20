@@ -31,17 +31,14 @@ def main():
 
 
 def recursive_convert(directory):
-    pass
+    for dirName, subdirList, fileList in os.walk(directory):
+        for fileName in fileList:
+            if fileName[-4:].lower() == '.srt':
+                convert_srt_file(os.path.join(dirName, fileName))
 
 
 def convert_srt_file(input_filename, output_filename=None):
-    try:
-        captions = codecs.open(input_filename, encoding='utf-8', mode='r').read()
-    except:
-        captions = open(input_filename, 'r').read()
-        captions = text(captions, errors='replace')
-
-    content = read_captions(captions)
+    content = read_captions(input_filename)
     if output_filename is None:
         if input_filename[-4:].lower() == '.srt':
             output_filename = input_filename[0: -4] + '.vtt'
@@ -50,12 +47,18 @@ def convert_srt_file(input_filename, output_filename=None):
     write_captions(content, output_filename)
 
 
-def read_captions(captions):
+def read_captions(input_filename):
+    try:
+        captions = codecs.open(input_filename, encoding='utf-8', mode='r').read()
+    except:
+        captions = open(input_filename, 'r').read()
+        captions = text(captions, errors='replace')
+
     srt_reader = pycaption.SRTReader()
     if srt_reader.detect(captions):
         return srt_reader.read(captions)
     else:
-        raise Exception('Illegal srt format :(')
+        raise Exception('Illegal srt format %s :(' % (input_filename))
 
 
 def write_captions(content, output_filename):

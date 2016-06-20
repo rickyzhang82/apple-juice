@@ -44,3 +44,4 @@ tmtagsHistory
 *.sublime-workspace
 .bundle
 bpmn-flow/
+*.vtt
