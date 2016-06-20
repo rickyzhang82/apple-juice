@@ -35,7 +35,7 @@ def main():
 def recursive_convert(directory):
     for dirName, subdirList, fileList in os.walk(directory):
         for fileName in fileList:
-            if fileName[-4:].lower() == '.srt' and '.AppleDouble/' not in dirName:
+            if fileName[-4:].lower() == '.srt' and dirName.find('.AppleDouble') == -1:
                 convert_srt_file(os.path.join(dirName, fileName))
 
 
