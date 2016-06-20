@@ -66,7 +66,7 @@ def read_captions(input_filename):
     if srt_reader.detect(captions):
         return srt_reader.read(captions)
     else:
-        raise Exception('Illegal srt format %s :(' % (input_filename))
+        raise Exception('Illegal srt format %s :(' % input_filename)
 
 
 def write_captions(content, output_filename):
