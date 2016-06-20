@@ -60,7 +60,10 @@ def read_captions(input_filename):
         result = chardet.detect(raw)
         encoding = result['encoding']
 
-    captions = io.open(input_filename, 'r', encoding=encoding).read()
+    try:
+        captions = io.open(input_filename, 'r', encoding=encoding).read()
+    except UnicodeDecodeError as e:
+        print(e.message + " from file -" + input_filename)
 
     srt_reader = pycaption.SRTReader()
     if srt_reader.detect(captions):
