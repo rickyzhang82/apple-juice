@@ -64,6 +64,7 @@ def read_captions(input_filename):
         captions = io.open(input_filename, 'r', encoding=encoding).read()
     except UnicodeDecodeError as e:
         print(e.message + " from file -" + input_filename)
+        raise e
 
     srt_reader = pycaption.SRTReader()
     if srt_reader.detect(captions):
