@@ -5,6 +5,8 @@ import codecs
 import os
 import sys
 import pycaption
+import io
+import chardet
 
 if 2 == sys.version_info[0]:
     text = unicode
@@ -48,11 +50,17 @@ def convert_srt_file(input_filename, output_filename=None):
 
 
 def read_captions(input_filename):
-    try:
-        captions = codecs.open(input_filename, encoding='utf-8', mode='r').read()
-    except:
-        captions = open(input_filename, 'r').read()
-        captions = text(captions, errors='replace')
+
+    byte_chunk = min(32, os.path.getsize(input_filename))
+    raw = open(input_filename, 'rb').read(byte_chunk)
+
+    if raw.startswith(codecs.BOM_UTF8):
+        encoding = 'utf-8-sig'
+    else:
+        result = chardet.detect(raw)
+        encoding = result['encoding']
+
+    captions = io.open(input_filename, 'r', encoding=encoding).read()
 
     srt_reader = pycaption.SRTReader()
     if srt_reader.detect(captions):
