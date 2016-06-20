@@ -1,110 +1,66 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import optparse
 import codecs
 import os
-
+import sys
 import pycaption
+
+if 2 == sys.version_info[0]:
+    text = unicode
+else:
+    text = str
 
 
 def main():
-    parser = optparse.OptionParser("usage: %prog [options]")
-    parser.add_option("-f", "--file",
-            action='store_true',
-            dest='directory',
-            help="input caption file",
-            default='',)
-    parser.add_option("-d", "--directory",
-            action='store_true',
-            dest='directory',
-            help="walk through directory to convert caption files",
-            default='',)
-    parser.add_option("--sami",
-            action='store_true',
-            dest='sami',
-            help="write captions in SAMI format",
-            default=False,)
-    parser.add_option("--dfxp",
-            action='store_true',
-            dest='dfxp',
-            help="write captions in DFXP format",
-            default=False,)
-    parser.add_option("--srt",
-            action='store_true',
-            dest='srt',
-            help="write captions in SRT format",
-            default=False,)
-    parser.add_option("--webvtt",
-            action='store_true',
-            dest='webvtt',
-            help="write captions in webvtt format",
-            default=False,)
-    parser.add_option("--transcript",
-            action='store_true',
-            dest='transcript',
-            help="write transcript for captions",
-            default=False,)
-    parser.add_option("--scc_lang",
-            dest='lang',
-            help="choose override language for input",
-            default='',)
-    parser.add_option("--scc_offset",
-            dest='offset',
-            help="choose offset for SCC file; measured in seconds",
-            default=0)
+    parser = optparse.OptionParser("usage: %prog [options] file/directory")
+    parser.add_option("-o", "--output",
+                      action="store", # optional because action defaults to "store"
+                      dest="output_filename",
+                      default=None,
+                      help="output file name",)
+
     (options, args) = parser.parse_args()
 
     try:
-        filename = args[0]
-    except:
-        raise Exception(
-        ('Expected usage: python caption_converter.py <path to caption file> ',
-        '[--sami --dfxp --srt --webvtt --transcript]'))
-
-    try:
-        captions = codecs.open(filename, encoding='utf-8', mode='r').read()
-    except:
-        captions = open(filename, 'r').read()
-        captions = unicode(captions, errors='replace')
-
-    content = read_captions(captions, options)
-    write_captions(content, options)
-
-
-def read_captions(captions, options):
-    scc_reader = pycaption.SCCReader()
-    srt_reader = pycaption.SRTReader()
-    sami_reader = pycaption.SAMIReader()
-    dfxp_reader = pycaption.DFXPReader()
-    webvtt_reader = pycaption.WebVTTReader()
-
-    if scc_reader.detect(captions):
-        if options.lang:
-            return scc_reader.read(captions, lang=options.lang,
-                                   offset=int(options.offset))
+        if os.path.isdir(args[0]):
+            directory = args[0]
+            recursive_convert(directory)
         else:
-            return scc_reader.read(captions, offset=int(options.offset))
-    elif srt_reader.detect(captions):
+            filename = args[0]
+            convert_srt_file(filename, options.output_filename)
+    except:
+        raise Exception('Expected usage: python caption_converter.py <path to caption file or directory>')
+
+
+def recursive_convert(directory):
+    pass
+
+
+def convert_srt_file(input_filename, output_filename=None):
+    try:
+        captions = codecs.open(input_filename, encoding='utf-8', mode='r').read()
+    except:
+        captions = open(input_filename, 'r').read()
+        captions = text(captions, errors='replace')
+
+    content = read_captions(captions)
+    if output_filename is None:
+        output_filename = input_filename + ".vtt"
+    write_captions(content, output_filename)
+
+
+def read_captions(captions):
+    srt_reader = pycaption.SRTReader()
+    if srt_reader.detect(captions):
         return srt_reader.read(captions)
-    elif sami_reader.detect(captions):
-        return sami_reader.read(captions)
-    elif dfxp_reader.detect(captions):
-        return dfxp_reader.read(captions)
-    elif webvtt_reader.detect(captions):
-        return webvtt_reader.read(captions)
     else:
-        raise Exception('No caption format detected :(')
+        raise Exception('Illegal srt format :(')
 
 
-def write_captions(content, options):
-    if options.sami:
-        print pycaption.SAMIWriter().write(content).encode("utf-8")
-    if options.dfxp:
-        print pycaption.DFXPWriter().write(content).encode("utf-8")
-    if options.webvtt:
-        print pycaption.WebVTTWriter().write(content).encode("utf-8")
-    if options.srt:
-        print pycaption.SRTWriter().write(content).encode("utf-8")
-    if options.transcript:
-        print pycaption.TranscriptWriter().write(content).encode("utf-8")
+def write_captions(content, output_filename):
+    with open(output_filename, 'w', encoding="utf-8") as output_file:
+        output_file.write(pycaption.WebVTTWriter().write(content).encode("utf-8"))
 
 
 if __name__ == '__main__':
