@@ -1,0 +1,145 @@
+1
+00:00:01,140 --> 00:00:05,602
+Welcome to the first lecture in our
+series on Bitcoin and cryptocurrencies.
+
+2
+00:00:05,602 --> 00:00:09,180
+I want to start by introducing the four
+lecturers who are going to be speaking in
+
+3
+00:00:09,180 --> 00:00:09,900
+the series.
+
+4
+00:00:10,910 --> 00:00:12,660
+The first lecturer is Joseph Bonneau.
+
+5
+00:00:12,660 --> 00:00:16,060
+He's a post doctoral researcher in
+computer science at Princeton University.
+
+6
+00:00:17,120 --> 00:00:19,300
+The second lecturer is me, Ed Felten.
+
+7
+00:00:19,300 --> 00:00:22,970
+I'm a professor at Princeton in computer
+science, and in the Woodrow Wilson School.
+
+8
+00:00:24,300 --> 00:00:26,350
+The third lecturer is Arvind Narayanan.
+
+9
+00:00:26,350 --> 00:00:29,210
+He's a computer science
+professor at Princeton.
+
+10
+00:00:29,210 --> 00:00:32,110
+And fourth, our special guest
+lecturer is Andrew Miller.
+
+11
+00:00:32,110 --> 00:00:35,590
+He's a PhD student in computer
+science at the University of Maryland.
+
+12
+00:00:35,590 --> 00:00:37,220
+There will be eleven lectures in total.
+
+13
+00:00:38,920 --> 00:00:41,780
+In this lecture number one,
+we're going to do two things.
+
+14
+00:00:41,780 --> 00:00:44,720
+First, we'll introduce some cryptographic
+primitives that turn out to
+
+15
+00:00:44,720 --> 00:00:47,380
+be necessary for
+talking about cryptocurrencies.
+
+16
+00:00:47,380 --> 00:00:50,420
+In particular,
+we'll talk about cryptographic hashes and
+
+17
+00:00:50,420 --> 00:00:51,440
+digital signatures.
+
+18
+00:00:51,440 --> 00:00:54,530
+And we'll talk about some of the ways
+in which those are used to build
+
+19
+00:00:54,530 --> 00:00:56,250
+cryptocurrencies.
+
+20
+00:00:56,250 --> 00:01:00,355
+And then at the end of the lecture, we'll
+start talking about cryptocurrencies.
+
+21
+00:01:00,355 --> 00:01:02,935
+And I'll give some examples
+of simple cryptocurrencies.
+
+22
+00:01:02,935 --> 00:01:06,825
+That illustrate some of the design
+challenges that we need to deal with.
+
+23
+00:01:06,825 --> 00:01:10,835
+I want to apologize for covering the
+cryptographic material at the beginning.
+
+24
+00:01:10,835 --> 00:01:13,875
+Unfortunately we have to eat some
+of our vegetables a little bit,
+
+25
+00:01:13,875 --> 00:01:17,085
+in order to lay groundwork for
+the cryptocurrency stuff.
+
+26
+00:01:17,085 --> 00:01:20,605
+So if you came for the cryptocurrency
+stuff let, me assure you first of all.
+
+27
+00:01:20,605 --> 00:01:22,700
+That we will get to it in this lecture.
+
+28
+00:01:22,700 --> 00:01:25,050
+And that having laid
+the groundwork in this lecture.
+
+29
+00:01:25,050 --> 00:01:28,260
+There's going to be a lot more
+specifically cryptocurrency-focused
+
+30
+00:01:28,260 --> 00:01:30,410
+material in later lectures.
+
+31
+00:01:30,410 --> 00:01:31,639
+All right, so let's get to it.
+

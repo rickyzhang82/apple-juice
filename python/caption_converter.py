@@ -22,15 +22,12 @@ def main():
 
     (options, args) = parser.parse_args()
 
-    try:
-        if os.path.isdir(args[0]):
-            directory = args[0]
-            recursive_convert(directory)
-        else:
-            filename = args[0]
-            convert_srt_file(filename, options.output_filename)
-    except:
-        raise Exception('Expected usage: python caption_converter.py <path to caption file or directory>')
+    if os.path.isdir(args[0]):
+        directory = args[0]
+        recursive_convert(directory)
+    else:
+        filename = args[0]
+        convert_srt_file(filename, options.output_filename)
 
 
 def recursive_convert(directory):
@@ -46,7 +43,10 @@ def convert_srt_file(input_filename, output_filename=None):
 
     content = read_captions(captions)
     if output_filename is None:
-        output_filename = input_filename + ".vtt"
+        if input_filename[-4:].lower() == '.srt':
+            output_filename = input_filename[0: -4] + '.vtt'
+        else:
+            output_filename = input_filename + '.vtt'
     write_captions(content, output_filename)
 
 
@@ -59,7 +59,7 @@ def read_captions(captions):
 
 
 def write_captions(content, output_filename):
-    with open(output_filename, 'w', encoding="utf-8") as output_file:
+    with open(output_filename, 'w') as output_file:
         output_file.write(pycaption.WebVTTWriter().write(content).encode("utf-8"))
 
 
