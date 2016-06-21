@@ -78,6 +78,7 @@ def read_captions(input_filename):
 def write_captions(content, output_filename):
     with open(output_filename, 'w') as output_file:
         output_file.write(pycaption.WebVTTWriter().write(content).encode("utf-8"))
+        print("Generate " + output_filename)
 
 
 if __name__ == '__main__':
