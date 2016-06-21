@@ -37,7 +37,7 @@ def recursive_convert(directory):
         for fileName in fileList:
             if fileName[-4:].lower() == '.srt' and \
                             dirName.find('.AppleDouble') == -1 and \
-                            not os.path.isfile(fileName[0:-4] + '.vtt'):
+                            not os.path.isfile(os.path.join(dirName,fileName[0: -4] + '.vtt')):
                 convert_srt_file(os.path.join(dirName, fileName))
 
 
@@ -65,7 +65,7 @@ def read_captions(input_filename):
     try:
         captions = io.open(input_filename, 'r', encoding=encoding).read()
     except UnicodeDecodeError as e:
-        print(e.message + " from file -" + input_filename)
+        print(e.message + " from file - " + input_filename)
         raise e
 
     srt_reader = pycaption.SRTReader()
